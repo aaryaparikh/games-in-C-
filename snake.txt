@@ -1,0 +1,187 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+int x,y,gameover,score=0,tailx[100],taily[100],a,b;
+const int height=20;
+const int width=20;
+int dir=0;
+int fruitx=rand()%width;
+int fruity=rand()%height;
+void setup()
+{
+x=width/2;
+y=height/2;
+gameover=0;
+}
+void draw()
+{
+int i,j,k,c,d;
+for(k=0;k<=score;k++)
+{
+c=tailx[k];
+d=taily[k];
+tailx[k]=a;
+taily[k]=b;
+a=c;
+b=d;
+}
+
+if(fruitx==0)
+{
+fruitx=1;
+}
+if(fruity==0)
+{
+fruity=1;
+}
+for(i=0;i<=score;i++)
+{
+	if(fruitx==tailx[i]&&fruity==taily[k])
+	{
+		fruitx++;
+		fruity++;
+	}
+}
+for(i=0;i<height;i++)
+{
+	for(j=0;j<width;j++)
+	{
+		if(i==0||j==0||i==height-1||j==width-1)
+		{
+			cout<<"#";
+		}
+		else if(i==y&&j==x)
+		{
+			cout<<"o";
+		}
+
+		else if(i==fruity&&j==fruitx)
+		{
+			cout<<"@";
+		}
+
+		else
+		{
+			int m=0;
+			for(int l=0;l<=score;l++)
+			{
+				if(i==taily[l]&&j==tailx[l])
+				{
+					cout<<"x";
+					m=1;
+				}
+
+			}
+			if(m==0)
+			{
+				cout<<" ";
+			}
+
+		}
+
+	}
+	cout<<endl;
+}
+if(x==fruitx&&y==fruity)
+{
+	fruitx=rand()%(height-1);
+	fruity=rand()%(width-1);
+	score++;
+}
+
+
+cout<<endl<<"score:- "<<score<<endl<<endl<<"W=UP       S=DOWN"<<endl<<"A=LEFT      D=RIGHT";
+}
+void input()
+{
+	if(getch())
+	{
+		switch(getch())
+		{
+			case 'w':
+			if(dir!=3)
+			{
+			dir=1;
+			}
+			break;
+
+			case 'a':
+			if(dir!=4)
+			{
+			dir=2;
+			}
+			break;
+			case 's':
+			if(dir!=1)
+			{
+			dir=3;
+			}
+			break;
+			case 'd':
+			if(dir!=2)
+			{
+			dir=4;
+			}
+			break;
+			default:
+			gameover=1;
+			break;
+		}
+	}
+a=x;
+b=y;
+}
+void logic()
+{
+	switch(dir)
+	{
+		case 1:
+
+			y--;
+
+			break;
+
+
+		case 3:
+
+			y++;
+				break;
+
+
+		case 2:
+
+			x--;
+			break;
+
+
+		case 4:
+
+			x++;
+			break;
+	}
+}
+void main()
+{
+clrscr();
+setup();
+for(;gameover!=1;)
+{       clrscr();
+	draw();
+	input();
+
+	logic();
+	if(x==0||x==width||y==0||y==height)
+	{
+	gameover=1;
+	}
+	for(int q=0;q<=score;q++)
+	{
+	if(x==tailx[q]&&y==taily[q])
+	{
+	gameover=1;
+	}
+	}
+}
+cout<<endl<<"GAMEOVER";
+getch();
+}
